@@ -1,6 +1,9 @@
 from rest_framework import viewsets, generics
 from .serializers import TerapeutasSerializer, TerapiaSerializer, UserSerializer
 from .models import Terapia, Terapeutas
+from django.http import JsonResponse
+from django.views.decorators.csrf import requires_csrf_token
+from django.views.decorators.http import require_POST
 
 from django.contrib.auth.models import User
 from rest_framework import permissions
@@ -22,6 +25,7 @@ class TerapeutaViewSet(viewsets.ModelViewSet):
 
     def perform_create(self, serializer):
         serializer.save(owner=self.request.user)
+
 
 class TerapiaViewSet(viewsets.ReadOnlyModelViewSet):
     queryset = Terapia.objects.all()
